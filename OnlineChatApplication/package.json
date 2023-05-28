@@ -3,17 +3,27 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "author": "",
+  "author": "Soujanya",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
     "http": "^0.0.1-security",
     "mongodb": "^5.5.0",
     "mongoose": "^7.2.1",
+    "nodemon": "^2.0.22",
     "socket.io": "^4.6.1"
-  }
+  },
+  "description": "Online chat application",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SoujiMad1310/OnlineChatApplication.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SoujiMad1310/OnlineChatApplication/issues"
+  },
+  "homepage": "https://github.com/SoujiMad1310/OnlineChatApplication#readme"
 }
