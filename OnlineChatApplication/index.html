@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=4.0">
+    <title>Simiplilearn Lab: Group Chat</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <div class="container border border-success p-2 mb-5 border-opacity-50">
+        <br>
+        <div class="jumbotron-fluid">
+            <h1 class="display-4 text-center text-success font-weight-bold"><b>Group Chat Conversation </b></h1>
+            <br>
+            <div id="messages">
+            </div>
+            <input id="name" class="form-control text-info" placeholder="Sender Name...">
+            <br>
+            <textarea id="message" class="form-control text-primary" placeholder="Type Message..."></textarea>
+            <br>
+            <button id="send" class="btn btn-success">Send</button>
+        </div>
+    </div>
+    
+    <!-- Script to read and display the messages -->
+    <script type="text/javascript">
+
+        // If the message is send on clicking the send button
+        // Then retrieve the data and set the messages in JSON 
+        // format. 
+        $(() => {
+            $("#send").click(() => {
+                sendMessage({
+                    name: $("#name").val(),
+                    message: $("#message").val()
+                });
+            })
+            getMessages()
+        })
+
+        // To get the messages
+        function getMessages() {
+            $.get('http://localhost:3000/messages', (data) => {
+                data.forEach(addMessages);
+            })
+        }
+
+        // To add messages in a format
+        function addMessages(message) {
+            $("#messages").append('<div class = "text-success"><strong>' + message.name.charAt(0).toUpperCase() + message.name.slice(1) + '</strong> says: <br><span>' + message.message + '</span></div><hr/>');
+        }
+
+        // To send the messages and to clear the input text
+        function sendMessage(message) {
+            $.post('http://localhost:3000/messages', message)
+            $("#name").val("");
+            $("#message").val("");
+        }
+        var socket = io();
+
+        socket.on('message', addMessages)
+
+    </script>
+</body>
+</html>
